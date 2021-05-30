@@ -1,4 +1,4 @@
-import 'package:skoczek_g6/screens/main_screen/body.dart';
+import 'package:skoczek_g6/screens/player/main_screen/body.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {

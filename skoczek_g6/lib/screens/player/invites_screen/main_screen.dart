@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:skoczek_g6/screens/invites_screen/body.dart';
+import 'package:skoczek_g6/screens/player/invites_screen/body.dart';
 
 class InvitesScreen extends StatelessWidget {
   const InvitesScreen({Key key}) : super(key: key);

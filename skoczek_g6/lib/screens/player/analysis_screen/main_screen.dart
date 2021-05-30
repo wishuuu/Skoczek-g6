@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:skoczek_g6/screens/analysis_screen/body.dart';
+import 'package:skoczek_g6/screens/player/analysis_screen/body.dart';
 
 class AnalysisScreen extends StatelessWidget {
   const AnalysisScreen({Key key}) : super(key: key);

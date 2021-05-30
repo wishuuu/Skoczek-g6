@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skoczek_g6/screens/matches_screen/body.dart';
+import 'package:skoczek_g6/screens/player/matches_screen/body.dart';
 
 class MatchesScreen extends StatelessWidget {
   const MatchesScreen({Key key}) : super(key: key);

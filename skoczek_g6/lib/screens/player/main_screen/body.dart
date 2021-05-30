@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:skoczek_g6/screens/main_screen/components/upper_bar.dart';
-import 'package:skoczek_g6/screens/main_screen/components/button.dart';
+import 'package:skoczek_g6/screens/player/main_screen/components/upper_bar.dart';
+import 'package:skoczek_g6/screens/player/main_screen/components/button.dart';
 
 class Body extends StatelessWidget {
   const Body({Key key}) : super(key: key);

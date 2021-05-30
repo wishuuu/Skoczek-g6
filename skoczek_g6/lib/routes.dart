@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:skoczek_g6/screens/main_screen/main_screen.dart';
-import 'package:skoczek_g6/screens/matches_screen/main_screen.dart';
-import 'package:skoczek_g6/screens/analysis_screen/main_screen.dart';
-import 'package:skoczek_g6/screens/invites_screen/main_screen.dart';
+import 'package:skoczek_g6/screens/player/main_screen/main_screen.dart';
+import 'package:skoczek_g6/screens/player/matches_screen/main_screen.dart';
+import 'package:skoczek_g6/screens/player/analysis_screen/main_screen.dart';
+import 'package:skoczek_g6/screens/player/invites_screen/main_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   MainScreen.routeName: (context) => MainScreen(),
