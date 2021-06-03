@@ -46,7 +46,7 @@ class Body extends StatelessWidget {
             ),
             Row(
               children: [
-                Button(size: size, string: "Historia partii"),
+                Button(size: size, string: "Historia partii", func: () => Navigator.pushNamed(context, '/history')),
                 Button(size: size, string: "Ustawienia"),
               ],
             )
