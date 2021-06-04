@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:skoczek_g6/db_manager.dart';
 import 'package:skoczek_g6/routes.dart';
 
+bool isOrganiser;
 void main() async{
   DBManager dbManager = DBManager();
   await dbManager.init();
   await dbManager.loginUser('wiszowaty', 'wiszowaty');
-  bool isOrganiser = await dbManager.checkOrganiser();
-  runApp(MyApp(isOrganiser));
+  isOrganiser = await dbManager.checkOrganiser();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp(this.isOrganiser);
-  bool isOrganiser;
+  MyApp();
 
   @override
   Widget build(BuildContext context) {
