@@ -27,11 +27,9 @@ class Body extends StatelessWidget {
             color: Color(0x80E9E9D5),
           ),
         ),
-        Column(
-          children : [
-            UpperBar(size: size),
-          ]
-        )
+        Column(children: [
+          UpperBar(size: size),
+        ])
       ],
     );
   }

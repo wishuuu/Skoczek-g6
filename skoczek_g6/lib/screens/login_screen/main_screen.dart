@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+import 'package:skoczek_g6/screens/login_screen/body.dart';
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({Key key}) : super(key: key);
+
+  static String routeName = "/login";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Body(),
+    );
+  }
+}
