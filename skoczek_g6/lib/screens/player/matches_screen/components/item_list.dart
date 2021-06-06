@@ -31,7 +31,7 @@ class ItemList extends StatelessWidget {
               style: TextStyle(fontSize: 21, color: Colors.black),
             ),
             Text(
-              tableNumber.toString(),
+              tableNumber != -1 ? tableNumber.toString() : ' ',
               style: TextStyle(fontSize: 21, color: Colors.black),
             ),
           ],

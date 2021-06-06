@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:skoczek_g6/db_manager.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreenOrganiser extends StatelessWidget {
   static String routeName = '/organiser';
   @override
   Widget build(BuildContext context) {

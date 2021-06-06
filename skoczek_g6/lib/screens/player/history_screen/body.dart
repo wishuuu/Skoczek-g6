@@ -4,7 +4,6 @@ import 'package:skoczek_g6/screens/player/history_screen/components/loading_mess
 import 'package:skoczek_g6/screens/player/history_screen/components/upper_bar.dart';
 import 'package:skoczek_g6/screens/player/history_screen/components/item_list.dart';
 import 'package:skoczek_g6/data_templates.dart';
-import 'package:skoczek_g6/screens/player/history_screen/components/loading_message.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);

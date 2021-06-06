@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skoczek_g6/db_manager.dart';
 
 import 'package:skoczek_g6/screens/player/matches_screen/components/loading_message.dart';
 import 'package:skoczek_g6/screens/player/matches_screen/components/upper_bar.dart';
@@ -6,9 +7,10 @@ import 'package:skoczek_g6/screens/player/matches_screen/components/item_list.da
 import 'package:skoczek_g6/data_templates.dart';
 
 class Body extends StatefulWidget {
-  Body({Key key}) : super(key: key);
-
   bool isLoadingCompleted = false;
+  final DBManager dbManager;
+
+  Body({Key key, this.dbManager}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -16,31 +18,17 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Widget> widgetsToShow;
+  List<MatchData> data;
 
   void loadData(Size size) {
-    print('Rozpoczeto wczytywanie');
     widget.isLoadingCompleted = true;
-    Future.delayed(
-      Duration(seconds: 2),
-      () => {
-        print('Wczytano'),
+    Future(
+      () async => {
+        data = await widget.dbManager.readMatches(),
         setState(
           () {
             widgetsToShow.removeAt(1);
-            widgetsToShow.addAll([
-              ItemList(
-                size: size,
-                opponentName: 'leOsiak',
-                date: '29.05.2021 14:00',
-                tableNumber: 7,
-              ),
-              ItemList(
-                size: size,
-                opponentName: 'Łysy',
-                date: '29.05.2021 18:00',
-                tableNumber: 3,
-              )]
-            );
+            widgetsToShow.addAll(generateWidgets(size, data));
           },
         ),
       },
@@ -48,7 +36,7 @@ class _BodyState extends State<Body> {
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     if (!widget.isLoadingCompleted) {
@@ -87,7 +75,7 @@ List<Widget> generateWidgets(
   Size size,
   List<MatchData> matchesDataList,
 ) {
-  List<Widget> list = [UpperBar(size: size)];
+  List<Widget> list = [];
   for (var i = 0; i < matchesDataList.length; i++) {
     list.add(
       ItemList(

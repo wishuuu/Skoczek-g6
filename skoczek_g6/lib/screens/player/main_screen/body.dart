@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skoczek_g6/data_templates.dart';
 
 import 'package:skoczek_g6/screens/player/main_screen/components/upper_bar.dart';
 import 'package:skoczek_g6/screens/player/main_screen/components/button.dart';
@@ -7,9 +6,7 @@ import 'package:skoczek_g6/db_manager.dart';
 
 class Body extends StatelessWidget {
   Body({Key key, this.dbManager}) : super(key: key);
-  DBManager dbManager;
-
-  List matches = [];
+  final DBManager dbManager;
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +36,32 @@ class Body extends StatelessWidget {
             UpperBar(size: size),
             Row(
               children: [
-                Button(size: size, string: "Twoje partie", func: () => Navigator.pushNamed(context, '/matches')),
+                Button(
+                    size: size,
+                    string: "Twoje partie",
+                    func: () => Navigator.pushNamed(context, '/matches',
+                        arguments: dbManager)),
                 Button(size: size, string: "Dołącz do turnieju")
               ],
             ),
             Row(
               children: [
-                Button(size: size, string: "Oczekujące zaproszenia", func: () => Navigator.pushNamed(context, '/invites')),
-                Button(size: size, string: "Analiza partii", func: () => Navigator.pushNamed(context, '/analysis')),
+                Button(
+                    size: size,
+                    string: "Oczekujące zaproszenia",
+                    func: () => Navigator.pushNamed(context, '/invites')),
+                Button(
+                    size: size,
+                    string: "Analiza partii",
+                    func: () => Navigator.pushNamed(context, '/analysis')),
               ],
             ),
             Row(
               children: [
-                Button(size: size, string: "Historia partii", func: () => Navigator.pushNamed(context, '/history')),
+                Button(
+                    size: size,
+                    string: "Historia partii",
+                    func: () => Navigator.pushNamed(context, '/history')),
                 Button(size: size, string: "Ustawienia"),
               ],
             )

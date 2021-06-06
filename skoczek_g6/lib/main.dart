@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:skoczek_g6/db_manager.dart';
 import 'package:skoczek_g6/routes.dart';
 
-bool isOrganiser;
-void main() async{
-  DBManager dbManager = DBManager();
-  await dbManager.init();
-  await dbManager.loginUser('wiszowaty', 'wiszowaty');
-  isOrganiser = await dbManager.checkOrganiser();
+DBManager dbManager = DBManager();
+void main() async {
   runApp(MyApp());
 }
 
@@ -21,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      initialRoute: isOrganiser == false ? '/player': '/organiser',
+      initialRoute: '/login',
       routes: routes,
     );
   }

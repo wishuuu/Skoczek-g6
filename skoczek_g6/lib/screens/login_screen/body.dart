@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:skoczek_g6/db_manager.dart';
+import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/login_screen/components/upper_bar.dart';
 
 class Body extends StatelessWidget {
   String password = "";
   String login = "";
-  Body({Key key}) : super(key: key);
+  Body({Key key, this.dbManager}) : super(key: key);
+
+  final DBManager dbManager;
+  bool isOrganiser = true;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,11 @@ class Body extends StatelessWidget {
                   onSurface: Colors.white,
                   backgroundColor: Colors.green[300],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Future.microtask(
+                    () => loginFunction(context),
+                  );
+                },
                 child: Text('Zaloguj się', style: TextStyle(fontSize: 22)),
               ),
             ),
@@ -97,6 +106,16 @@ class Body extends StatelessWidget {
           )
         ]),
       ],
+    );
+  }
+
+  Future<void> loginFunction(context) async {
+    await dbManager.loginUser(login, password);
+    isOrganiser = await dbManager.checkOrganiser();
+    Navigator.pushNamed(
+      context,
+      isOrganiser ? '/organiser' : '/player',
+      arguments: dbManager,
     );
   }
 }
