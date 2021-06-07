@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:skoczek_g6/screens/register_screen/components/upper_bar.dart';
+import 'package:skoczek_g6/db_manager.dart';
 
 class Body extends StatelessWidget {
   String login = "";
@@ -10,7 +11,9 @@ class Body extends StatelessWidget {
   String nazwisko = "";
   String email = "";
 
-  Body({Key key}) : super(key: key);
+  DBManager dbManager;
+
+  Body({Key key, this.dbManager}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +90,8 @@ class Body extends StatelessWidget {
           Row(children: [
             Container(
               width: size.width * 0.4,
-              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              margin: EdgeInsets.symmetric(
+                  vertical: 0, horizontal: size.width * 0.05),
               child: TextField(
                 onChanged: (String input) {
                   imie = input;
@@ -103,7 +107,8 @@ class Body extends StatelessWidget {
             ),
             Container(
               width: size.width * 0.4,
-              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              margin: EdgeInsets.symmetric(
+                  vertical: 0, horizontal: size.width * 0.05),
               child: TextField(
                 onChanged: (String input) {
                   nazwisko = input;
@@ -145,7 +150,9 @@ class Body extends StatelessWidget {
                   onSurface: Colors.white,
                   backgroundColor: Colors.green[300],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Future(() async => await registerFunction(context));
+                },
                 child: Text('Zarejestruj się', style: TextStyle(fontSize: 22)),
               ),
             ),
@@ -153,5 +160,47 @@ class Body extends StatelessWidget {
         ]),
       ],
     );
+  }
+
+  Future<void> registerFunction(context) async {
+    if (login == "" ||
+        password == "" ||
+        imie == "" ||
+        nazwisko == "" ||
+        email == "") return false;
+    if (ranking == 0) ranking = 400;
+    int errorCode = await dbManager.registerUser(
+        login, password, ranking, imie, nazwisko, email);
+    if (errorCode == 0) {
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Rejestracja nie udana'),
+            content: Text('Nazwa użytkownika zajęta'),
+          );
+        },
+      );
+    } else if (errorCode == 1)
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Rejestracja nie udana'),
+            content: Text('Nazwa użytkownika zajęta'),
+          );
+        },
+      );
+    else if (errorCode == 2)
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Rejestracja nie udana'),
+            content: Text('Email zajęty'),
+          );
+        },
+      );
   }
 }

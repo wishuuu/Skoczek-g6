@@ -61,7 +61,9 @@ class Body extends StatelessWidget {
                     onSurface: Colors.white,
                     backgroundColor: Colors.green[300],
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Future(() async => await joinFunction(context));
+                  },
                   child: Text("Dołącz do turnieju",
                       style: TextStyle(fontSize: 22)),
                 ),
@@ -71,5 +73,45 @@ class Body extends StatelessWidget {
         ),
       ],
     );
+  }
+  Future<void> joinFunction(context) async {
+    int isSuccesful = await dbManager.joinTournament(tournamentCode);
+    if (isSuccesful == 0) Navigator.pop(context);
+    else if (isSuccesful == 1)
+    {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Dołączenie nie udane'),
+            content: Text('Nie istnieje turniej o takim kodzie'),
+          );
+        },
+      );
+    }
+    else if (isSuccesful == 2)
+    {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Dołączenie nie udane'),
+            content: Text('Już dołączyłeś do tego turnieju'),
+          );
+        },
+      );
+    }
+    else if (isSuccesful == 2)
+    {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Dołączenie nie udane'),
+            content: Text('Rejestracja na ten turniej nie jest otwarta'),
+          );
+        },
+      );
+    }
   }
 }

@@ -99,7 +99,7 @@ class Body extends StatelessWidget {
                   onSurface: Colors.white,
                   backgroundColor: Colors.green[300],
                 ),
-                onPressed: () {},
+                onPressed: () {Navigator.pushNamed(context, "/register", arguments: dbManager);},
                 child: Text('Zarejestruj się', style: TextStyle(fontSize: 22)),
               ),
             ),

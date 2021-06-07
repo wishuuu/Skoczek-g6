@@ -107,4 +107,63 @@ class DBManager {
 
     return array;
   }
+
+  Future<int> registerUser(
+      login, password, ranking, imie, nazwisko, email) async {
+    var results = await conn.query(
+        'SELECT ID '
+        'FROM user '
+        'WHERE nickname = ?',
+        [login]);
+    for (var row in results) {
+      if (row[0] != null) return 1;
+    }
+    results = await conn.query(
+        'SELECT ID '
+        'FROM user '
+        'WHERE email = ?',
+        [email]);
+    for (var row in results) {
+      if (row[0] != null) return 2;
+    }
+    await conn.query(
+        'INSERT INTO user (nickname, password, ranking, firstName, lastName, email) '
+        'VALUES (?, ?, ?, ?, ?, ?)',
+        [login, password, ranking, imie, nazwisko, email]);
+    return 0;
+  }
+
+  Future<int> joinTournament(tournamentID) async {
+    var results = await conn.query(
+        'SELECT ID '
+        'FROM tournament '
+        'WHERE ID = ?',
+        [tournamentID]);
+    for (var row in results) {
+      if (row[0] == null) return 1;
+      break;
+    }
+    results = await conn.query(
+        'SELECT * '
+        'FROM user_tournament '
+        'WHERE tournamentID = ? AND userID = ?',
+        [tournamentID, this.userId]);
+    for (var row in results) {
+      if (row[0] != null) return 2;
+    }
+    results = await conn.query(
+        'SELECT ID '
+        'FROM tournament '
+        'WHERE ID = ? AND isOpen = true',
+        [tournamentID]);
+    for (var row in results) {
+      if (row[0] == null) return 3;
+      break;
+    }
+    await conn.query(
+        'INSERT INTO user_tournament(userID, tournamentID, inInvitationAccepted) '
+        'VALUES (?, ?, ?)',
+        [this.userId, tournamentID, true]);
+    return 0;
+  }
 }
