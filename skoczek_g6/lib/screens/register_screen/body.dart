@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:skoczek_g6/screens/register_screen/components/upper_bar.dart';
 import 'package:skoczek_g6/db_manager.dart';
+import 'package:skoczek_g6/constants.dart';
 
 class Body extends StatelessWidget {
   String login = "";
@@ -148,7 +149,7 @@ class Body extends StatelessWidget {
                 style: TextButton.styleFrom(
                   primary: Colors.black,
                   onSurface: Colors.white,
-                  backgroundColor: Colors.green[300],
+                  backgroundColor: kPrimaryColor,
                 ),
                 onPressed: () {
                   Future(() async => await registerFunction(context));

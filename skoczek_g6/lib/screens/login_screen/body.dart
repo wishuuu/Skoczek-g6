@@ -3,6 +3,7 @@ import 'package:skoczek_g6/db_manager.dart';
 import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/login_screen/components/upper_bar.dart';
+import 'package:skoczek_g6/constants.dart';
 
 class Body extends StatelessWidget {
   String password = "";
@@ -77,7 +78,7 @@ class Body extends StatelessWidget {
                 style: TextButton.styleFrom(
                   primary: Colors.black,
                   onSurface: Colors.white,
-                  backgroundColor: Colors.green[300],
+                  backgroundColor: kPrimaryColor,
                 ),
                 onPressed: () {
                   Future.microtask(
@@ -97,7 +98,7 @@ class Body extends StatelessWidget {
                 style: TextButton.styleFrom(
                   primary: Colors.black,
                   onSurface: Colors.white,
-                  backgroundColor: Colors.green[300],
+                  backgroundColor: kPrimaryColor,
                 ),
                 onPressed: () {Navigator.pushNamed(context, "/register", arguments: dbManager);},
                 child: Text('Zarejestruj się', style: TextStyle(fontSize: 22)),
