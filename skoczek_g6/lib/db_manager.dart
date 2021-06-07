@@ -4,6 +4,7 @@ import 'package:skoczek_g6/data_templates.dart';
 class DBManager {
   int userId = 0;
   MySqlConnection conn;
+  String firstName;
 
   DBManager([this.userId]);
 
@@ -28,6 +29,9 @@ class DBManager {
       if (row[0] == null) break;
       this.userId = row[0];
     }
+
+    await this.readName();
+
     return this.userId == 0 ? false : true;
   }
 
@@ -41,6 +45,20 @@ class DBManager {
       return row[0] > 0;
     }
     return false;
+  }
+
+  Future<void> readName() async{
+    var results = await conn.query(
+      'SELECT firstName '
+      'FROM user '
+      'WHERE ID = ?',
+      [this.userId]
+    );
+    for (var row in results) {
+      if (row[0] == null) break;
+      this.firstName = row[0];
+      break;
+    }
   }
 
   Future<List> readMatches() async {

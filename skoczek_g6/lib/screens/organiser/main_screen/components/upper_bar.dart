@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:skoczek_g6/constants.dart';
 
 class UpperBar extends StatelessWidget {
-  const UpperBar({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
+  const UpperBar({Key key, @required this.size, @required this.firstName})
+      : super(key: key);
+
   final Size size;
+  final String firstName;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class UpperBar extends StatelessWidget {
           ),
           child: Stack(alignment: Alignment.center, children: [
             Text(
-              "Witaj Oskar!",
+              "Witaj $firstName!",
               style: TextStyle(
                 fontSize: 32,
                 foreground: Paint()
@@ -47,7 +47,7 @@ class UpperBar extends StatelessWidget {
                   ..color = Colors.black,
               ),
             ),
-            Text("Witaj Oskar!",
+            Text("Witaj $firstName!",
                 style: TextStyle(
                   fontSize: 32,
                   color: kTextColor,

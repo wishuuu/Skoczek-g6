@@ -33,7 +33,7 @@ class Body extends StatelessWidget {
         ),
         Column(
           children: [
-            UpperBar(size: size),
+            UpperBar(size: size, firstName: dbManager.firstName),
             Row(
               children: [
                 Button(

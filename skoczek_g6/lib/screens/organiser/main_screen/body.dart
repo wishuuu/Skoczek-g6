@@ -36,33 +36,33 @@ class Body extends StatelessWidget {
         ),
         Column(
           children: [
-            UpperBar(size: size),
+            UpperBar(size: size, firstName: dbManager.firstName),
             Row(
               children: [
                 Button(
-                    size: size,
-                    string: "Twoje turnieje",
-                    //func: () => Navigator.pushNamed(context, '/matches')
-                    ),
+                  size: size,
+                  string: "Twoje turnieje",
+                  //func: () => Navigator.pushNamed(context, '/matches')
+                ),
                 Button(
-                  size: size, 
-                  string: "Stwórz turniej",
-                  func: () => Navigator.pushNamed(context, '/createTournament')
-                )
+                    size: size,
+                    string: "Stwórz turniej",
+                    func: () =>
+                        Navigator.pushNamed(context, '/createTournament'))
               ],
             ),
             Row(
               children: [
                 Button(
-                    size: size,
-                    string: "Czat",
-                    //func: () => Navigator.pushNamed(context, '/invites')
-                    ),
+                  size: size,
+                  string: "Czat",
+                  //func: () => Navigator.pushNamed(context, '/invites')
+                ),
                 Button(
-                    size: size,
-                    string: "Ustawienia",
-                    //func: () => Navigator.pushNamed(context, '/analysis')
-                    ),
+                  size: size,
+                  string: "Ustawienia",
+                  //func: () => Navigator.pushNamed(context, '/analysis')
+                ),
               ],
             ),
           ],
