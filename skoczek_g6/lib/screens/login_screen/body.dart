@@ -60,7 +60,7 @@ class Body extends StatelessWidget {
                 password = input;
               },
               style: TextStyle(color: Colors.black),
-              obscureText: false,
+              obscureText: true,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Haslo',
