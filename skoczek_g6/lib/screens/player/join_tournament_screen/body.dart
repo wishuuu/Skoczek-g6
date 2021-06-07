@@ -75,9 +75,9 @@ class Body extends StatelessWidget {
     );
   }
   Future<void> joinFunction(context) async {
-    int isSuccesful = await dbManager.joinTournament(tournamentCode);
-    if (isSuccesful == 0) Navigator.pop(context);
-    else if (isSuccesful == 1)
+    int errorCode = await dbManager.joinTournament(tournamentCode);
+    if (errorCode == 0) Navigator.pop(context);
+    else if (errorCode == 1)
     {
       showDialog(
         context: context,
@@ -89,7 +89,7 @@ class Body extends StatelessWidget {
         },
       );
     }
-    else if (isSuccesful == 2)
+    else if (errorCode == 2)
     {
       showDialog(
         context: context,
@@ -101,7 +101,7 @@ class Body extends StatelessWidget {
         },
       );
     }
-    else if (isSuccesful == 2)
+    else if (errorCode == 3)
     {
       showDialog(
         context: context,

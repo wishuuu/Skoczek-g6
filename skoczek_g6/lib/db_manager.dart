@@ -153,14 +153,11 @@ class DBManager {
 
   Future<int> joinTournament(tournamentID) async {
     var results = await conn.query(
-        'SELECT ID '
+        'SELECT * '
         'FROM tournament '
         'WHERE ID = ?',
         [tournamentID]);
-    for (var row in results) {
-      if (row[0] == null) return 1;
-      break;
-    }
+    if (results.length == 0) return 1;
     results = await conn.query(
         'SELECT * '
         'FROM user_tournament '
@@ -174,10 +171,7 @@ class DBManager {
         'FROM tournament '
         'WHERE ID = ? AND isOpen = true',
         [tournamentID]);
-    for (var row in results) {
-      if (row[0] == null) return 3;
-      break;
-    }
+    if (results.length == 0) return 3;
     await conn.query(
         'INSERT INTO user_tournament(userID, tournamentID, inInvitationAccepted) '
         'VALUES (?, ?, ?)',
