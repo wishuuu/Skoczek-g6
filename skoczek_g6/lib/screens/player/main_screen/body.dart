@@ -37,19 +37,36 @@ class Body extends StatelessWidget {
             Row(
               children: [
                 Button(
-                    size: size,
-                    string: "Twoje partie",
-                    func: () => Navigator.pushNamed(context, '/matches',
-                        arguments: dbManager)),
-                Button(size: size, string: "Dołącz do turnieju")
+                  size: size,
+                  string: "Twoje partie",
+                  func: () => Navigator.pushNamed(
+                    context,
+                    '/matches',
+                    arguments: dbManager,
+                  ),
+                ),
+                Button(
+                  size: size,
+                  string: "Dołącz do turnieju",
+                  func: () => Navigator.pushNamed(
+                    context,
+                    '/join',
+                    arguments: dbManager,
+                  ),
+                )
               ],
             ),
             Row(
               children: [
                 Button(
-                    size: size,
-                    string: "Oczekujące zaproszenia",
-                    func: () => Navigator.pushNamed(context, '/invites')),
+                  size: size,
+                  string: "Oczekujące zaproszenia",
+                  func: () => Navigator.pushNamed(
+                    context,
+                    '/invites',
+                    arguments: dbManager,
+                  ),
+                ),
                 Button(
                     size: size,
                     string: "Analiza partii",
@@ -59,9 +76,14 @@ class Body extends StatelessWidget {
             Row(
               children: [
                 Button(
-                    size: size,
-                    string: "Historia partii",
-                    func: () => Navigator.pushNamed(context, '/history')),
+                  size: size,
+                  string: "Historia partii",
+                  func: () => Navigator.pushNamed(
+                    context,
+                    '/history',
+                    arguments: dbManager,
+                  ),
+                ),
                 Button(size: size, string: "Ustawienia"),
               ],
             )

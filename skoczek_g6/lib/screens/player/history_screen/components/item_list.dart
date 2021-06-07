@@ -5,10 +5,10 @@ import 'package:skoczek_g6/constants.dart';
 class ItemList extends StatelessWidget {
   const ItemList(
       {Key key,
-      @required Size this.size,
-      String this.opponentName,
-      String this.date,
-      int this.tableNumber})
+      @required this.size,
+      this.opponentName,
+      this.date,
+      this.tableNumber})
       : super(key: key);
 
   final Size size;
@@ -31,7 +31,7 @@ class ItemList extends StatelessWidget {
               style: TextStyle(fontSize: 21, color: Colors.black),
             ),
             Text(
-              tableNumber.toString(),
+              tableNumber == -1 ? ' ' : tableNumber.toString(),
               style: TextStyle(fontSize: 21, color: Colors.black),
             ),
           ],

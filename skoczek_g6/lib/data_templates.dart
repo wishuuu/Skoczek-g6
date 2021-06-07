@@ -1,10 +1,12 @@
 class MatchData {
   MatchData(
-    String this.opponentName,
-    String this.date,
-    int this.tableNumber,
+    this.id,
+    this.opponentName,
+    this.date,
+    this.tableNumber,
   );
 
+  int id;
   String opponentName;
   String date;
   int tableNumber;
@@ -12,10 +14,12 @@ class MatchData {
 
 class InviteData {
   InviteData(
-    String this.tournamentName,
-    String this.date,
+    this.id,
+    this.tournamentName,
+    this.date,
   );
 
+  int id;
   String tournamentName;
   String date;
 }

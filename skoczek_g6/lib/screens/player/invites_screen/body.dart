@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skoczek_g6/db_manager.dart';
 
 import 'package:skoczek_g6/screens/player/invites_screen/components/loading_message.dart';
 import 'package:skoczek_g6/screens/player/invites_screen/components/upper_bar.dart';
@@ -6,9 +7,10 @@ import 'package:skoczek_g6/screens/player/invites_screen/components/item_list.da
 import 'package:skoczek_g6/data_templates.dart';
 
 class Body extends StatefulWidget {
-  Body({Key key}) : super(key: key);
+  Body({Key key, this.dbManager}) : super(key: key);
 
   bool isLoadingCompleted = false;
+  DBManager dbManager;
 
   @override
   _BodyState createState() => _BodyState();
@@ -16,23 +18,18 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Widget> widgetsToShow;
+  List<InviteData> invitesData = [];
 
   void loadData(Size size) {
-    print('Rozpoczeto wczytywanie');
     widget.isLoadingCompleted = true;
-    Future.delayed(
-      Duration(seconds: 2),
-      () => {
-        print('Wczytano'),
+    Future(
+      () async => {
+        invitesData = await widget.dbManager.readInvites(),
         setState(
           () {
             widgetsToShow.removeAt(1);
-            widgetsToShow.add(
-              ItemList(
-                size: size,
-                tournamentName: 'Mistrzostwa bloku',
-                date: '29.05.2021',
-              ),
+            widgetsToShow.addAll(
+              generateWidgets(size, invitesData),
             );
           },
         ),
@@ -80,7 +77,7 @@ class _BodyState extends State<Body> {
 }
 
 List<Widget> generateWidgets(Size size, List<InviteData> matchesDataList) {
-  List<Widget> list = [UpperBar(size: size)];
+  List<Widget> list = [];
   for (var i = 0; i < matchesDataList.length; i++) {
     list.add(
       ItemList(

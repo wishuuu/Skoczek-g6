@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skoczek_g6/db_manager.dart';
 
 import 'package:skoczek_g6/screens/player/invites_screen/body.dart';
 
@@ -9,8 +10,9 @@ class InvitesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DBManager dbManager = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      body: Body(),
+      body: Body(dbManager: dbManager),
     );
   }
 }

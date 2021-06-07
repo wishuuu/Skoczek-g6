@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skoczek_g6/db_manager.dart';
+import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/player/history_screen/components/loading_message.dart';
 import 'package:skoczek_g6/screens/player/history_screen/components/upper_bar.dart';
@@ -6,9 +8,10 @@ import 'package:skoczek_g6/screens/player/history_screen/components/item_list.da
 import 'package:skoczek_g6/data_templates.dart';
 
 class Body extends StatefulWidget {
-  Body({Key key}) : super(key: key);
+  Body({Key key, this.dbManager}) : super(key: key);
 
   bool isLoadingCompleted = false;
+  DBManager dbManager;
 
   @override
   _BodyState createState() => _BodyState();
@@ -16,26 +19,24 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Widget> widgetsToShow;
+  List historyMatchesData;
 
   void loadData(Size size) {
     widget.isLoadingCompleted = true;
-    Future.delayed(
-      Duration(seconds: 2),
-      () => setState(
-        () {
-          widgetsToShow.removeAt(1);
-          widgetsToShow.addAll(
-            generateWidgets(
-              size,
-              [
-                MatchData('leOsiak', 'data', 7),
-                MatchData('Lysy', 'data', 3),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+    Future(() async => {
+          historyMatchesData = await widget.dbManager.readHistory(),
+          setState(
+            () {
+              widgetsToShow.removeAt(1);
+              widgetsToShow.addAll(
+                generateWidgets(
+                  size,
+                  historyMatchesData,
+                ),
+              );
+            },
+          ),
+        });
   }
 
   @override
