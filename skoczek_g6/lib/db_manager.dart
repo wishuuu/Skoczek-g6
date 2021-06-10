@@ -2,7 +2,7 @@ import 'package:mysql1/mysql1.dart';
 import 'package:skoczek_g6/data_templates.dart';
 
 class DBManager {
-  int userId = 0;
+  int userId = -1;
   MySqlConnection conn;
   String firstName;
 
@@ -33,6 +33,10 @@ class DBManager {
     await this.readName();
 
     return this.userId == 0 ? false : true;
+  }
+
+  void logout() {
+    this.userId = -1;
   }
 
   Future<bool> checkOrganiser() async {
