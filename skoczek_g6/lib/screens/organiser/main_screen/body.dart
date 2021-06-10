@@ -48,7 +48,7 @@ class Body extends StatelessWidget {
                     size: size,
                     string: "Stwórz turniej",
                     func: () =>
-                        Navigator.pushNamed(context, '/createTournament'))
+                        Navigator.pushNamed(context, '/createTournament', arguments: dbManager))
               ],
             ),
             Row(

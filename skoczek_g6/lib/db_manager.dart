@@ -47,13 +47,12 @@ class DBManager {
     return false;
   }
 
-  Future<void> readName() async{
+  Future<void> readName() async {
     var results = await conn.query(
-      'SELECT firstName '
-      'FROM user '
-      'WHERE ID = ?',
-      [this.userId]
-    );
+        'SELECT firstName '
+        'FROM user '
+        'WHERE ID = ?',
+        [this.userId]);
     for (var row in results) {
       if (row[0] == null) break;
       this.firstName = row[0];
@@ -177,5 +176,37 @@ class DBManager {
         'VALUES (?, ?, ?)',
         [this.userId, tournamentID, true]);
     return 0;
+  }
+
+  Future<int> createTournament(
+      tournamentName, date, numofTables, place, isOpen) async {
+    var results = await conn.query(
+        'SELECT ID '
+        'FROM tournament '
+        'WHERE name = ? AND organiserID = ?',
+        [tournamentName, this.userId]);
+    for (var _ in results) {
+      return -2;
+    }
+    await conn.query(
+        'INSERT INTO tournament(date, place, name, numOfTables, isOpen, organiserID) '
+        'VALUES (?, ?, ?, ?, ?, ?)',
+        [
+          date,
+          place,
+          tournamentName,
+          numofTables == 0 ? null : numofTables,
+          isOpen,
+          this.userId
+        ]);
+    results = await conn.query(
+        'SELECT ID '
+        'FROM tournament '
+        'WHERE name = ? AND organiserID = ?',
+        [tournamentName, this.userId]);
+    for (var row in results) {
+      return row[0];
+    }
+    return -1;
   }
 }

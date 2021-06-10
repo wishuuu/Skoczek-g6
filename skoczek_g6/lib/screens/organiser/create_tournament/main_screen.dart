@@ -10,7 +10,7 @@ class CreateTournament extends StatelessWidget {
     DBManager dbManager =
         ModalRoute.of(context).settings.arguments as DBManager;
     return Scaffold(
-      body: Body(),
+      body: Body(dbManager: dbManager),
     );
   }
 }
