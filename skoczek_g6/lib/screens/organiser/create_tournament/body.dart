@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skoczek_g6/db_manager.dart';
+import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/organiser/create_tournament/components/upper_bar.dart';
 import 'package:skoczek_g6/constants.dart';
@@ -6,11 +8,13 @@ import 'package:skoczek_g6/constants.dart';
 class Body extends StatefulWidget {
   String tournamentName = "";
   DateTime date = DateTime.now();
-  int numofTables = 1;
+  int numofTables = 0;
   String place = "";
   bool isOpen = true;
 
-  Body({Key key}) : super(key: key);
+  final DBManager dbManager;
+
+  Body({Key key, this.dbManager}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -87,7 +91,7 @@ class _BodyState extends State<Body> {
               obscureText: false,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Liczba stolików',
+                  labelText: 'Liczba stolików (opcjonalne)',
                   fillColor: Colors.white,
                   filled: true),
             ),
@@ -135,7 +139,9 @@ class _BodyState extends State<Body> {
                   onSurface: Colors.white,
                   backgroundColor: kPrimaryColor,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await createTournament(context);
+                },
                 child: Text('Stwórz turniej', style: TextStyle(fontSize: 22)),
               ),
             ),
@@ -143,6 +149,69 @@ class _BodyState extends State<Body> {
         ]),
       ],
     );
+  }
+
+  Future<void> createTournament(context) async {
+    if (widget.tournamentName == "") {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Musisz podać nazwę turnieju'),
+            content: Text('Musisz podać nazwę turnieju'),
+          );
+        },
+      );
+      return;
+    }
+    if (widget.place == "") {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Musisz podać miejsce odbycia się turnieju'),
+            content: Text('Musisz podać miejsce odbycia się turnieju'),
+          );
+        },
+      );
+      return;
+    }
+    int tournamentID = await widget.dbManager.createTournament(widget.tournamentName,
+        widget.date.toString(), widget.numofTables, widget.place, widget.isOpen);
+    if (tournamentID == -1) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Nie udało się utworzyć turnieju'),
+            content: Text('Nie udało się utworzyć turnieju'),
+          );
+        },
+      );
+    }
+    if (tournamentID == -2) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Nie udało się utworzyć turnieju'),
+            content: Text('Już utworzyłeś turniej o takiej nazwie'),
+          );
+        },
+      );
+    } 
+    else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Utworzonono turniej'),
+              content: Text('Utworzonono turniej o numerze: $tournamentID'),
+            );
+          });
+      widget.tournamentName = "";
+      widget.place = "";
+    }
   }
 
   Future<void> _selectDate(BuildContext context) async {
