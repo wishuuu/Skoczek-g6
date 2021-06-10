@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skoczek_g6/data_templates.dart';
+import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/organiser/main_screen/components/upper_bar.dart';
 import 'package:skoczek_g6/screens/organiser/main_screen/components/button.dart';
@@ -42,13 +43,14 @@ class Body extends StatelessWidget {
                 Button(
                   size: size,
                   string: "Twoje turnieje",
-                  //func: () => Navigator.pushNamed(context, '/matches')
+                  func: () => Navigator.pushNamed(context, '/yourTournaments', arguments: dbManager)
                 ),
                 Button(
                     size: size,
                     string: "Stwórz turniej",
                     func: () =>
-                        Navigator.pushNamed(context, '/createTournament'))
+                        Navigator.pushNamed(context, '/createTournament')
+                        )
               ],
             ),
             Row(
