@@ -41,16 +41,16 @@ class Body extends StatelessWidget {
             Row(
               children: [
                 Button(
-                  size: size,
-                  string: "Twoje turnieje",
-                  func: () => Navigator.pushNamed(context, '/yourTournaments', arguments: dbManager)
-                ),
+                    size: size,
+                    string: "Twoje turnieje",
+                    func: () => Navigator.pushNamed(context, '/yourTournaments',
+                        arguments: dbManager)),
                 Button(
                     size: size,
                     string: "Stwórz turniej",
-                    func: () =>
-                        Navigator.pushNamed(context, '/createTournament', arguments: dbManager)
-                        )
+                    func: () => Navigator.pushNamed(
+                        context, '/createTournament',
+                        arguments: dbManager))
               ],
             ),
             Row(
