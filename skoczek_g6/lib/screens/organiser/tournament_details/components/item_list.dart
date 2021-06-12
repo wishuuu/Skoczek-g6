@@ -3,37 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:skoczek_g6/constants.dart';
 
 class ItemList extends StatelessWidget {
-  const ItemList({
-    Key key,
-    @required this.size,
-    this.tournamentID,
-    this.tournamentName,
-    this.date,
-    this.func,
-  }) : super(key: key);
-
-  final Size size;
-  final int tournamentID;
-  final String tournamentName;
-  final String date;
-  final Function func;
+  const ItemList({Key key, this.string1, this.string2}) : super(key: key);
+  final String string1;
+  final String string2;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    Size size = MediaQuery.of(context).size;
+    return Container(
       child: Container(
         child: Row(
           children: [
             Text(
-              this.tournamentID.toString(),
+              this.string1,
               style: TextStyle(fontSize: 21, color: Colors.black),
             ),
             Text(
-              this.tournamentName,
-              style: TextStyle(fontSize: 21, color: Colors.black),
-            ),
-            Text(
-              this.date,
+              this.string2,
               style: TextStyle(fontSize: 21, color: Colors.black),
             ),
           ],
@@ -61,7 +47,6 @@ class ItemList extends StatelessWidget {
           vertical: size.width * 0.03,
         ),
       ),
-      onTap: () => func(),
     );
   }
 }

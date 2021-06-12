@@ -14,6 +14,7 @@ import 'package:skoczek_g6/screens/organiser/main_screen/main_screen.dart';
 import 'package:skoczek_g6/screens/organiser/create_tournament/main_screen.dart';
 import 'package:skoczek_g6/screens/organiser/your_tournaments/main_screen.dart';
 import 'package:skoczek_g6/screens/organiser/tournament_info/main_screen.dart';
+import 'package:skoczek_g6/screens/organiser/tournament_details/main_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   MainScreen.routeName: (context) => MainScreen(),
@@ -28,4 +29,5 @@ final Map<String, WidgetBuilder> routes = {
   CreateTournament.routeName: (context) => CreateTournament(),
   YourTournamentsOrganiser.routeName: (context) => YourTournamentsOrganiser(),
   TournamentInfosOrganiser.routeName: (context) => TournamentInfosOrganiser(),
+  TournamentDetailsOrganiser.routeName: (context) => TournamentDetailsOrganiser(),
 };

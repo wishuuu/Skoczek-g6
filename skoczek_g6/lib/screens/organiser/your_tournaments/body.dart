@@ -17,16 +17,16 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Widget> widgetsToShow;
-  List<MatchData> data;
+  List<InviteData> data;
 
-  void loadData(Size size) {
+  void loadData(Size size, context) {
     widget.isLoadingCompleted = true;
     Future(
       () async => {
-        data = await widget.dbManager.readMatches(),
+        data = await widget.dbManager.readTournaments(),
         setState(
           () {
-            widgetsToShow.addAll(generateWidgets(size, data));
+            widgetsToShow.addAll(generateWidgets(size, data, context, widget.dbManager));
           },
         ),
       },
@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
       widgetsToShow = [
         UpperBar(size: size),
       ];
-      loadData(size);
+      loadData(size, context);
     }
 
     return Stack(
@@ -71,15 +71,19 @@ class _BodyState extends State<Body> {
 
 List<Widget> generateWidgets(
   Size size,
-  List<MatchData> tournamentsDataList,
+  List<InviteData> tournamentsDataList,
+  context,
+  dbManager,
 ) {
   List<Widget> list = [];
   for (var i = 0; i < tournamentsDataList.length; i++) {
     list.add(
       ItemList(
         size: size,
-        tournamentName: tournamentsDataList[i].opponentName,
+        tournamentID: tournamentsDataList[i].id,
+        tournamentName: tournamentsDataList[i].tournamentName,
         date: tournamentsDataList[i].date,
+        func: () => Navigator.pushNamed(context, '/tournamentDetails', arguments: TournamentDetailsArguments(tournamentsDataList[i].id, dbManager)),
       ),
     );
   }

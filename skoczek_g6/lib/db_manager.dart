@@ -213,4 +213,60 @@ class DBManager {
     }
     return -1;
   }
+
+  Future<List> readTournaments() async {
+    List<InviteData> array = [];
+
+    var results = await conn.query(
+        'SELECT name, ID, date '
+        'FROM tournament '
+        'WHERE organiserID = ? '
+        'ORDER BY date DESC',
+        [this.userId]);
+
+    for (var row in results) {
+      if (row[0] == Null) break;
+      array.add(
+        InviteData(
+          row[1],
+          row[0],
+          row[2].toString().substring(0, 10),
+        ),
+      );
+    }
+
+    return array;
+  }
+
+  Future<DetailsData> readTournamentDetails(tournamentID) async {
+    var results = await conn.query(
+      'SELECT date, place, winner, name, numOfTables, isOpen '
+      'FROM tournament '
+      'WHERE ID = ?',
+      [tournamentID]
+    );
+
+
+    for (var row in results)
+    {
+      String nickname;
+
+      if (row[2] != Null){
+      var winner = await conn.query(
+        'SELECT nickname '
+        'FROM user '
+        'WHERE ID = ?',
+        [row[2]]
+      );
+      for (var name in winner)
+      {
+        nickname = name[0];
+      }
+      }
+
+      else nickname = "";
+
+      return DetailsData(tournamentID, row[0].toString().substring(0, 10), row[1], nickname, row[3], row[4], row[5]==1);
+    }
+  }
 }
