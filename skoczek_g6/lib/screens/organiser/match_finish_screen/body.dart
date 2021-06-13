@@ -8,6 +8,7 @@ import 'package:skoczek_g6/constants.dart';
 class Body extends StatelessWidget {
   String player1 = "";
   String player2 = "";
+  String moves = "";
   Body({Key key, this.dbManager}) : super(key: key);
 
   final DBManager dbManager;
@@ -54,6 +55,7 @@ class Body extends StatelessWidget {
             ),
           ),
           Container(
+            margin: EdgeInsets.symmetric(vertical: 25),
             width: size.width * 0.9,
             child: TextField(
               onChanged: (String input) {
@@ -68,80 +70,24 @@ class Body extends StatelessWidget {
                   filled: true),
             ),
           ),
-          Row(
-            children: [
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 65),
-                  margin: EdgeInsets.symmetric(vertical: 30),
-                  child: Text('Białe',
-                      style: TextStyle(
-                          fontSize: 22, backgroundColor: kPrimaryColor))),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 65),
-                  child: Text('Czarne',
-                      style: TextStyle(
-                          fontSize: 22, backgroundColor: kPrimaryColor))),
-            ],
-          ),
-          Row(
-            children: [
-              Container(
-                // padding: EdgeInsets.symmetric(horizontal: 65),
-                width: size.width * 0.1,
-                child: TextField(
-                  onChanged: (String input) {},
-                  style: TextStyle(color: Colors.black),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      fillColor: Colors.white,
-                      filled: true),
-                ),
-              ),
-              Container(
-                width: size.width * 0.1,
-                child: TextField(
-                  onChanged: (String input) {},
-                  style: TextStyle(color: Colors.black),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      fillColor: Colors.white,
-                      filled: true),
-                ),
-              ),
-            ],
+          Container(
+            width: size.width * 0.9,
+            child: TextField(
+              onChanged: (String input) {
+                moves = input;
+              },
+              style: TextStyle(color: Colors.black, height: 15),
+              obscureText: true,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Tu wpisz ruchy graczy.',
+                  fillColor: Colors.white,
+                  filled: true),
+            ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 25),
             child: SizedBox(
-              height: size.height * 0.06,
-              width: size.width * 0.5,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.black,
-                  onSurface: Colors.white,
-                  backgroundColor: kPrimaryColor,
-                ),
-                onPressed: () {
-                  //       onPressed: () async {
-                  //       List<PersonEntry> moves = await Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //         builder: (context) => SOF(),
-                  //       ),
-                  //     );
-                  // if (moves != null) moves.forEach(print);
-                  // },
-                },
-                child: Text('Dodaj ruch', style: TextStyle(fontSize: 22)),
-              ),
-            ),
-          ),
-          Container(
-            child: SizedBox(
-              height: size.height * 0.06,
-              width: size.width * 0.5,
               child: TextButton(
                 style: TextButton.styleFrom(
                   primary: Colors.black,
