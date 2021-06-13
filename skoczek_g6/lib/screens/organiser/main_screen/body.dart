@@ -58,7 +58,7 @@ class Body extends StatelessWidget {
                 Button(
                   size: size,
                   string: "Czat",
-                  //func: () => Navigator.pushNamed(context, '/invites')
+                  func: () => Navigator.pushNamed(context, '/finishScreen')
                 ),
                 Button(
                   size: size,
