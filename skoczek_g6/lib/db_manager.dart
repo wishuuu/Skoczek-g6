@@ -240,33 +240,65 @@ class DBManager {
 
   Future<DetailsData> readTournamentDetails(tournamentID) async {
     var results = await conn.query(
-      'SELECT date, place, winner, name, numOfTables, isOpen '
-      'FROM tournament '
-      'WHERE ID = ?',
-      [tournamentID]
-    );
+        'SELECT date, place, winner, name, numOfTables, isOpen '
+        'FROM tournament '
+        'WHERE ID = ?',
+        [tournamentID]);
 
-
-    for (var row in results)
-    {
+    for (var row in results) {
       String nickname;
 
-      if (row[2] != Null){
-      var winner = await conn.query(
-        'SELECT nickname '
-        'FROM user '
-        'WHERE ID = ?',
-        [row[2]]
-      );
-      for (var name in winner)
-      {
-        nickname = name[0];
-      }
-      }
+      if (row[2] != Null) {
+        var winner = await conn.query(
+            'SELECT nickname '
+            'FROM user '
+            'WHERE ID = ?',
+            [row[2]]);
+        for (var name in winner) {
+          nickname = name[0];
+        }
+      } else
+        nickname = "";
+      int numOfPlayers = 0;
+      var players = await conn.query(
+          'SELECT COUNT(*) '
+          'FROM user_tournament '
+          'WHERE tournamentID=?',
+          [tournamentID]);
+      for (var nop in players) numOfPlayers = nop[0];
 
-      else nickname = "";
-
-      return DetailsData(tournamentID, row[0].toString().substring(0, 10), row[1], nickname, row[3], row[4], row[5]==1);
+      return DetailsData(tournamentID, row[0].toString().substring(0, 10),
+          row[1], nickname, row[3], row[4], row[5] == 1, numOfPlayers);
     }
+  }
+
+  Future<List> readPlayers(tournamentID) async {
+    List<int> players = [];
+    var result = await conn.query(
+        'SELECT	userID '
+        'FROM user_tournament '
+        'JOIN user on user_tournament.userID = user.ID '
+        'WHERE user_tournament.tournamentID = ? '
+        'ORDER BY user.ranking DESC',
+        [tournamentID]);
+    for (var row in result) {
+      players.add(row[0]);
+    }
+
+    return players;
+  }
+
+  Future<List> readTournamentMatches(tournamentID) async {
+    List<TournamentMatch> matches = [];
+    var result = await conn.query(
+        'SELECT white, black, winner '
+        'FROM game '
+        'WHERE tournamentID = ?',
+        [tournamentID]);
+    for (var row in result) {
+      matches.add(TournamentMatch(row[0], row[1], row[2]));
+    }
+
+    return matches;
   }
 }

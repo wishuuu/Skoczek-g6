@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skoczek_g6/data_templates.dart';
 import 'package:skoczek_g6/db_manager.dart';
+import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/organiser/tournament_details/components/upper_bar.dart';
 import 'package:skoczek_g6/screens/organiser/tournament_details/components/item_list.dart';
@@ -75,5 +76,14 @@ class _BodyState extends State<Body> {
         Column(children: widgetsToShow)
       ],
     );
+  }
+
+  Future<void> generateMatches() async {
+    List players = await widget.dbManager.readPlayers(data.id);
+    List scores = [];
+    List matches = await widget.dbManager.readTournamentMatches(data.id);
+    List newMatches = [];
+
+    if (matches.length == 0) {}
   }
 }

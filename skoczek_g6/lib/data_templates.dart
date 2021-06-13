@@ -27,11 +27,7 @@ class InviteData {
 }
 
 class TournamentDetailsArguments {
-
-  TournamentDetailsArguments(
-    this.tournamentID,
-    this.dbManager
-  );
+  TournamentDetailsArguments(this.tournamentID, this.dbManager);
 
   int tournamentID;
   DBManager dbManager;
@@ -45,7 +41,8 @@ class DetailsData {
     this.winner,
     this.name,
     this.numOfTables,
-    this.isOpen
+    this.isOpen,
+    this.numOfPlayers,
   );
 
   int id;
@@ -55,4 +52,16 @@ class DetailsData {
   String name;
   int numOfTables;
   bool isOpen;
+  int numOfPlayers;
+}
+
+class TournamentMatch {
+  TournamentMatch(
+    this.white,
+    this.black,
+    this.winner,
+  );
+  int white;
+  int black;
+  int winner;
 }
