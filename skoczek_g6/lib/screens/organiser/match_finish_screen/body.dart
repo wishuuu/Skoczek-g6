@@ -73,11 +73,11 @@ class Body extends StatelessWidget {
           Container(
             width: size.width * 0.9,
             child: TextField(
+              maxLines: 12,
               onChanged: (String input) {
                 moves = input;
               },
-              style: TextStyle(color: Colors.black, height: 15),
-              obscureText: true,
+              style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Tu wpisz ruchy graczy.',
