@@ -174,15 +174,6 @@ class Body extends StatelessWidget {
         login, password, ranking, imie, nazwisko, email);
     if (errorCode == 0) {
       Navigator.pop(context);
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Rejestracja nie udana'),
-            content: Text('Nazwa użytkownika zajęta'),
-          );
-        },
-      );
     } else if (errorCode == 1)
       showDialog(
         context: context,

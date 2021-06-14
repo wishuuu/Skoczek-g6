@@ -10,6 +10,7 @@ class Body extends StatefulWidget {
   String moves = "";
   int winner = 0;
   bool winnerCheck = true;
+  bool drawCheck = false;
   Body({Key key, this.dbManager, this.matchID}) : super(key: key);
 
   final DBManager dbManager;
@@ -108,8 +109,24 @@ class _BodyState extends State<Body> {
                         setState(
                           () => {
                             widget.winnerCheck = !widget.winnerCheck,
-                            print('check'),
-                            print(widget.winnerCheck)
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Remis"),
+                    Checkbox(
+                      checkColor: Colors.black,
+                      activeColor: kPrimaryColor,
+                      value: widget.drawCheck,
+                      onChanged: (bool value) {
+                        setState(
+                          () => {
+                            widget.drawCheck = !widget.drawCheck,
                           },
                         );
                       },
@@ -128,8 +145,9 @@ class _BodyState extends State<Body> {
                       onPressed: () => {
                         widget.dbManager.chooseWinner(
                             widget.matchID,
-                            widget.winnerCheck ? data[0] : data[2],
-                            widget.moves)
+                            widget.drawCheck ? 0 : widget.winnerCheck ? data[0] : data[2],
+                            widget.moves),
+                        Navigator.pop(context)
                       },
                       child: Text('Zatwierdź', style: TextStyle(fontSize: 22)),
                     ),

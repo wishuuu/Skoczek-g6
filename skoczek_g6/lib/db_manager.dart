@@ -69,8 +69,8 @@ class DBManager {
     var results = await conn.query(
       'SELECT game.ID, user.nickname, game.date, game.time, game.tableID '
       'FROM game JOIN user ON user.ID = game.white OR user.ID = game.black '
-      'WHERE user.ID != ? AND CURDATE() <= game.date',
-      [this.userId],
+      'WHERE user.ID != ? AND CURDATE() <= game.date AND (game.white = ? OR game.black = ?)',
+      [this.userId, this.userId, this.userId],
     );
 
     for (var row in results) {
