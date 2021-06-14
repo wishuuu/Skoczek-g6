@@ -3,20 +3,59 @@ import 'package:skoczek_g6/db_manager.dart';
 import 'package:skoczek_g6/main.dart';
 
 import 'package:skoczek_g6/screens/organiser/match_finish_screen/components/upper_bar.dart';
+import 'package:skoczek_g6/screens/organiser/match_finish_screen/components/item_list.dart';
 import 'package:skoczek_g6/constants.dart';
 
-class Body extends StatelessWidget {
-  String player1 = "";
-  String player2 = "";
+class Body extends StatefulWidget {
   String moves = "";
-  Body({Key key, this.dbManager}) : super(key: key);
+  int winner = 0;
+  bool winnerCheck = true;
+  Body({Key key, this.dbManager, this.matchID}) : super(key: key);
 
   final DBManager dbManager;
-  bool isOrganiser = true;
+  final int matchID;
+
+  bool isLoadingCompleted = false;
 
   @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  List<Widget> widgetsToShow = [];
+  List data = [];
+
+  void loadData(Size size, context) {
+    widget.isLoadingCompleted = true;
+    Future(
+      () async => {
+        widgetsToShow = [UpperBar(size: size)],
+        data = await widget.dbManager.readNicknames(widget.matchID),
+        setState(
+          () => {
+            widgetsToShow.addAll(
+              [
+                ItemList(
+                  string1: 'White:',
+                  string2: data[1],
+                ),
+                ItemList(
+                  string1: 'Black:',
+                  string2: data[3],
+                ),
+              ],
+            ),
+          },
+        ),
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    if (!widget.isLoadingCompleted) {
+      loadData(size, context);
+    }
     return Stack(
       children: [
         Container(
@@ -36,73 +75,70 @@ class Body extends StatelessWidget {
             color: Color(0x80E9E9D5),
           ),
         ),
-        Column(children: [
-          UpperBar(size: size),
-          Container(
-            width: size.width * 0.9,
-            margin: EdgeInsets.symmetric(vertical: 25),
-            child: TextField(
-              onChanged: (String input) {
-                player1 = input;
-              },
-              style: TextStyle(color: Colors.black),
-              obscureText: false,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Gracz 1',
-                  fillColor: Colors.white,
-                  filled: true),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 25),
-            width: size.width * 0.9,
-            child: TextField(
-              onChanged: (String input) {
-                player2 = input;
-              },
-              style: TextStyle(color: Colors.black),
-              obscureText: true,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Gracz 2',
-                  fillColor: Colors.white,
-                  filled: true),
-            ),
-          ),
-          Container(
-            width: size.width * 0.9,
-            child: TextField(
-              maxLines: 12,
-              onChanged: (String input) {
-                moves = input;
-              },
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Tu wpisz ruchy graczy.',
-                  fillColor: Colors.white,
-                  filled: true),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 25),
-            child: SizedBox(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.black,
-                  onSurface: Colors.white,
-                  backgroundColor: kPrimaryColor,
+        UpperBar(size: size),
+        Column(
+          children: [
+            Column(children: widgetsToShow),
+            Column(
+              children: [
+                Container(
+                  width: size.width * 0.9,
+                  child: TextField(
+                    maxLines: 12,
+                    onChanged: (String input) {
+                      widget.moves = input;
+                    },
+                    style: TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Tu wpisz ruchy graczy.',
+                        fillColor: Colors.white,
+                        filled: true),
+                  ),
                 ),
-                onPressed: () {
-                  // Navigator.pushNamed(context, "/register",
-                  //     arguments: dbManager);
-                },
-                child: Text('Zatwierdź', style: TextStyle(fontSize: 22)),
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Czy wygrał biały"),
+                    Checkbox(
+                      checkColor: Colors.black,
+                      activeColor: kPrimaryColor,
+                      value: widget.winnerCheck,
+                      onChanged: (bool value) {
+                        setState(
+                          () => {
+                            widget.winnerCheck = !widget.winnerCheck,
+                            print('check'),
+                            print(widget.winnerCheck)
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 25),
+                  child: SizedBox(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.black,
+                        onSurface: Colors.white,
+                        backgroundColor: kPrimaryColor,
+                      ),
+                      onPressed: () => {
+                        widget.dbManager.chooseWinner(
+                            widget.matchID,
+                            widget.winnerCheck ? data[0] : data[2],
+                            widget.moves)
+                      },
+                      child: Text('Zatwierdź', style: TextStyle(fontSize: 22)),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          )
-        ]),
+          ],
+        ),
       ],
     );
   }

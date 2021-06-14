@@ -33,6 +33,13 @@ class TournamentDetailsArguments {
   DBManager dbManager;
 }
 
+class MatchFinalArguments {
+  MatchFinalArguments(this.matchID, this.dbManager);
+
+  int matchID;
+  DBManager dbManager;
+}
+
 class DetailsData {
   DetailsData(
     this.id,
@@ -60,8 +67,20 @@ class TournamentMatch {
     this.white,
     this.black,
     this.winner,
+    this.ID,
   );
   int white;
   int black;
   int winner;
+  int ID;
+}
+
+class TournamentPlayer {
+  TournamentPlayer(
+    this.playerID,
+    this.score,
+  );
+
+  int playerID;
+  double score;
 }
